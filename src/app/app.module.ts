@@ -11,6 +11,7 @@ import { CreateBookComponent } from './pages/create-book/create-book.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { NavbarComponent } from './pages/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     CreateBookComponent,
     RegisterComponent,
     ProductDetailComponent,
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,

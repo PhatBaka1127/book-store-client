@@ -1,0 +1,20 @@
+<nav class="navbar">
+  <div class="nav-left">
+    <a routerLink="/home" class="logo">📚 BookStore</a>
+  </div>
+
+  <div class="nav-right" *ngIf="user">
+    <span class="greeting">Xin chào, <strong>{{ user.email }}</strong></span>
+
+    <!-- Chỉ hiện nút giỏ hàng nếu role == 0 -->
+    <button *ngIf="user.role === 0" class="cart-btn" (click)="goToCart()">
+      🛒 Giỏ hàng
+    </button>
+
+    <button class="logout-btn" (click)="logout()">Đăng xuất</button>
+  </div>
+
+  <div *ngIf="!user" class="nav-right">
+    <a routerLink="/login">Đăng nhập</a>
+  </div>
+</nav>
