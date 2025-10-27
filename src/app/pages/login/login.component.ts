@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,20 +10,48 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent {
   loginForm: FormGroup;
+  loading = false;
+  errorMessage = '';
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      password: ['', [Validators.required]]
     });
   }
 
   onSubmit() {
-    if (this.loginForm.valid) {
-      console.log('Form data:', this.loginForm.value);
-      alert('Login successful (fake)');
-    } else {
-      alert('Please fill out the form correctly.');
+    if (this.loginForm.invalid) {
+      this.errorMessage = 'Vui lòng nhập đầy đủ thông tin';
+      return;
     }
+
+    this.loading = true;
+    this.errorMessage = '';
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        console.log('✅ Login success:', res);
+        alert('Đăng nhập thành công!');
+        
+        // Nếu API trả về token, bạn có thể lưu lại
+        if (res?.token) {
+          localStorage.setItem('token', res.token);
+        }
+
+        // Chuyển hướng sang trang chủ (ví dụ)
+        this.router.navigate(['/']);
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('❌ Login failed:', err);
+        this.errorMessage = err.error?.message || 'Sai tài khoản hoặc mật khẩu';
+        this.loading = false;
+      }
+    });
   }
 }
