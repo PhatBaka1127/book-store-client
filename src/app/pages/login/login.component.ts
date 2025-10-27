@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cookieService: CookieService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -37,9 +39,18 @@ export class LoginComponent {
       next: (res) => {
         console.log('✅ Login success:', res);
         alert('Đăng nhập thành công!');
-        
-        if (res?.token) {
-          localStorage.setItem('token', res.token);
+
+        // Lưu token và user info vào cookie
+        if (res?.accessToken) {
+          this.cookieService.set('token', res.accessToken, undefined, '/');
+        }
+
+        if (res) {
+          this.cookieService.set('user', JSON.stringify({
+            id: res.id,
+            email: res.email,
+            role: res.role
+          }), undefined, '/');
         }
 
         this.router.navigate(['/home']);

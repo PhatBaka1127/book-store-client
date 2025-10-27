@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './pages/home/home.component';
 import { CreateBookComponent } from './pages/create-book/create-book.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     LoginComponent,
     HomeComponent,
     CreateBookComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

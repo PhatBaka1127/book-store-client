@@ -1,6 +1,9 @@
 <div class="home-container">
   <h2>Danh sách Books</h2>
-  <button (click)="goToCreateBook()">+ Tạo sách mới</button>
+
+  <!-- Chỉ hiện nút tạo sách nếu role khác 0 -->
+  <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Tạo sách mới</button>
+
   <div *ngIf="loading">Đang tải sách...</div>
 
   <div *ngIf="!loading && books.length === 0">

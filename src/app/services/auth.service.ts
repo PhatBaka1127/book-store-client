@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
@@ -14,15 +14,20 @@ export class AuthService {
 
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
-      tap(res => {
+      tap((res) => {
         // Lưu token vào cookie
         this.cookieService.set('token', res.accessToken, undefined, '/'); // đường dẫn '/' để dùng toàn app
         // Lưu user info cũng có thể lưu cookie hoặc localStorage
-        this.cookieService.set('user', JSON.stringify({
-          id: res.id,
-          email: res.email,
-          role: res.role
-        }), undefined, '/');
+        this.cookieService.set(
+          'user',
+          JSON.stringify({
+            id: res.id,
+            email: res.email,
+            role: res.role,
+          }),
+          undefined,
+          '/'
+        );
       })
     );
   }
@@ -34,5 +39,13 @@ export class AuthService {
   logout(): void {
     this.cookieService.delete('token', '/');
     this.cookieService.delete('user', '/');
+  }
+
+  register(data: {
+    email: string;
+    password: string;
+    role: number;
+  }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/register`, data);
   }
 }

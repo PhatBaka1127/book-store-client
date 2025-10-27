@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BookService, Book } from '../../services/book.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +11,27 @@ import { BookService, Book } from '../../services/book.service';
 export class HomeComponent implements OnInit {
   books: Book[] = [];
   loading = true;
+  userRole: number | null = null;
 
-  constructor(private bookService: BookService, private router: Router) {}
+  constructor(
+    private bookService: BookService,
+    private router: Router,
+    private cookieService: CookieService
+  ) {}
 
   ngOnInit(): void {
+    // Lấy user từ cookie
+    const userCookie = this.cookieService.get('user');
+    if (userCookie) {
+      try {
+        const user = JSON.parse(userCookie);
+        this.userRole = user.role;
+      } catch (err) {
+        console.error('Không parse được cookie user:', err);
+      }
+    }
+
+    // Lấy danh sách sách từ API
     this.bookService.getBooks().subscribe({
       next: (res) => {
         this.books = res;

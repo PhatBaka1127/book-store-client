@@ -4,18 +4,21 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
       <label>Email:</label>
-      <input type="email" formControlName="email" placeholder="Email">
+      <input type="email" formControlName="email">
     </div>
 
     <div>
       <label>Password:</label>
-      <input type="password" formControlName="password" placeholder="Password">
+      <input type="password" formControlName="password">
     </div>
 
-    <button type="submit" [disabled]="loading">
-      {{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}
-    </button>
+    <button type="submit">{{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}</button>
 
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
+
+  <p class="register-link">
+    Chưa có tài khoản? 
+    <a [routerLink]="['/register']">Đăng ký ngay</a>
+  </p>
 </div>
