@@ -38,13 +38,11 @@ export class LoginComponent {
         console.log('✅ Login success:', res);
         alert('Đăng nhập thành công!');
         
-        // Nếu API trả về token, bạn có thể lưu lại
         if (res?.token) {
           localStorage.setItem('token', res.token);
         }
 
-        // Chuyển hướng sang trang chủ (ví dụ)
-        this.router.navigate(['/']);
+        this.router.navigate(['/home']);
         this.loading = false;
       },
       error: (err) => {

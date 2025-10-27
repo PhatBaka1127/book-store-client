@@ -1,0 +1,20 @@
+<div class="home-container">
+  <h2>Danh sách Books</h2>
+
+  <div *ngIf="loading">Đang tải sách...</div>
+
+  <div *ngIf="!loading && books.length === 0">
+    Không có sách nào.
+  </div>
+
+  <div class="book-list" *ngIf="!loading && books.length > 0">
+    <div class="book-item" *ngFor="let book of books">
+      <img [src]="book.image || 'https://via.placeholder.com/150'" alt="{{ book.name }}" width="150">
+      <h3>{{ book.name }}</h3>
+      <p><strong>Category:</strong> {{ book.categoryName }}</p>
+      <p><strong>Price:</strong> {{ book.unitPrice | currency:'VND':'symbol':'1.0-0' }}</p>
+      <p><strong>Stock:</strong> {{ book.stock }}</p>
+      <p *ngIf="book.description">{{ book.description }}</p>
+    </div>
+  </div>
+</div>
