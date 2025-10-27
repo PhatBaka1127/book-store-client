@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { BookService, Book } from '../../services/book.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class HomeComponent implements OnInit {
   books: Book[] = [];
   loading = true;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private router: Router) {}
 
   ngOnInit(): void {
     this.bookService.getBooks().subscribe({
@@ -23,5 +24,9 @@ export class HomeComponent implements OnInit {
         this.loading = false;
       }
     });
+  }
+
+  goToCreateBook() {
+    this.router.navigate(['/create-book']);
   }
 }

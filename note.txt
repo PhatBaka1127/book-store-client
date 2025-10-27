@@ -1,0 +1,2 @@
+create service: ng g s services/book
+create component: ng g c pages/home
