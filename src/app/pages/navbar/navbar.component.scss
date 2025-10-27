@@ -1,0 +1,56 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #2d3748;
+  color: #fff;
+
+  .logo {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .greeting {
+      font-size: 0.95rem;
+    }
+
+    button {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.2s;
+
+      &.cart-btn {
+        background-color: #4299e1;
+        &:hover {
+          background-color: #3182ce;
+        }
+      }
+
+      &.logout-btn {
+        background-color: #e53e3e;
+        &:hover {
+          background-color: #c53030;
+        }
+      }
+    }
+
+    a {
+      color: #63b3ed;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
