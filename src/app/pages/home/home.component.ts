@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Lấy user từ cookie
+    // Lấy user role từ cookie
     const userCookie = this.cookieService.get('user');
     if (userCookie) {
       try {
@@ -31,14 +31,14 @@ export class HomeComponent implements OnInit {
       }
     }
 
-    // Lấy danh sách sách từ API
+    // Load books
     this.bookService.getBooks().subscribe({
-      next: (res) => {
+      next: res => {
         this.books = res;
         this.loading = false;
       },
-      error: (err) => {
-        console.error('❌ Lỗi tải sách:', err);
+      error: err => {
+        console.error(err);
         this.loading = false;
       }
     });
@@ -46,5 +46,9 @@ export class HomeComponent implements OnInit {
 
   goToCreateBook() {
     this.router.navigate(['/create-book']);
+  }
+
+  goToDetail(bookId: number) {
+    this.router.navigate(['/book', bookId]);
   }
 }

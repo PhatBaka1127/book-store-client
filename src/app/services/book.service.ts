@@ -58,4 +58,16 @@ export class BookService {
 
     return this.http.post(`${this.apiUrl}/books`, formData);
   }
+
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<any>(`${this.apiUrl}/books/${id}`).pipe(
+      map(res => {
+        if (res.result && res.value) {
+          return res.value as Book;
+        } else {
+          throw new Error(res.message || 'Không tìm thấy sách');
+        }
+      })
+    );
+  }
 }

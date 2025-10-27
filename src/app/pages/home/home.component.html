@@ -1,7 +1,7 @@
 <div class="home-container">
   <h2>Danh sách Books</h2>
 
-  <!-- Chỉ hiện nút tạo sách nếu role khác 0 -->
+  <!-- Nút tạo sách nếu role khác 0 -->
   <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Tạo sách mới</button>
 
   <div *ngIf="loading">Đang tải sách...</div>
@@ -12,7 +12,14 @@
 
   <div class="book-list" *ngIf="!loading && books.length > 0">
     <div class="book-item" *ngFor="let book of books">
-      <img [src]="book.image || 'https://via.placeholder.com/150'" alt="{{ book.name }}" width="150">
+      <!-- Click vào ảnh đi đến chi tiết -->
+      <img 
+        [src]="book.image || 'https://via.placeholder.com/150'" 
+        alt="{{ book.name }}" 
+        width="150"
+        (click)="goToDetail(book.id)"
+        style="cursor: pointer;"
+      >
       <h3>{{ book.name }}</h3>
       <p><strong>Category:</strong> {{ book.categoryName }}</p>
       <p><strong>Price:</strong> {{ book.unitPrice | currency:'VND':'symbol':'1.0-0' }}</p>

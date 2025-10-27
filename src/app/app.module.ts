@@ -10,6 +10,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CreateBookComponent } from './pages/create-book/create-book.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { RegisterComponent } from './pages/register/register.component';
     HomeComponent,
     CreateBookComponent,
     RegisterComponent,
+    ProductDetailComponent,
   ],
   imports: [
     BrowserModule,

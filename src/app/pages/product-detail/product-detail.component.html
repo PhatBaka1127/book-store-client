@@ -1,0 +1,11 @@
+<div class="product-detail-container" *ngIf="book">
+  <img [src]="book.image || 'https://via.placeholder.com/200'" alt="{{ book.name }}" width="200">
+  <h2>{{ book.name }}</h2>
+  <p><strong>Category:</strong> {{ book.categoryName }}</p>
+  <p><strong>Price:</strong> {{ book.unitPrice | currency:'VND':'symbol':'1.0-0' }}</p>
+  <p><strong>Stock:</strong> {{ book.stock }}</p>
+  <p *ngIf="book.description">{{ book.description }}</p>
+
+  <!-- Nút cart nếu role = 0 -->
+  <button *ngIf="userRole === 0" (click)="addToCart()">🛒 Add to Cart</button>
+</div>
