@@ -22,6 +22,10 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/cart']);
   }
 
+  goToHistory(): void {
+    this.router.navigate(['/order-history']);
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/login']);

@@ -1,5 +1,5 @@
 <div class="register-container">
-  <h2>Đăng ký tài khoản</h2>
+  <h2>Register</h2>
 
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div>
@@ -20,7 +20,7 @@
       </select>
     </div>
 
-    <button type="submit" [disabled]="loading">{{ loading ? 'Đang đăng ký...' : 'Đăng ký' }}</button>
+    <button type="submit" [disabled]="loading">{{ loading ? 'Loading...' : 'Register' }}</button>
 
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>

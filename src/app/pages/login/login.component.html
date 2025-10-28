@@ -1,5 +1,5 @@
 <div class="login-container">
-  <h2>Đăng nhập</h2>
+  <h2>Login</h2>
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
@@ -12,13 +12,13 @@
       <input type="password" formControlName="password">
     </div>
 
-    <button type="submit">{{ loading ? 'Đang đăng nhập...' : 'Đăng nhập' }}</button>
+    <button type="submit">{{ loading ? 'Loading...' : 'Login' }}</button>
 
     <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
   </form>
 
   <p class="register-link">
-    Chưa có tài khoản? 
-    <a [routerLink]="['/register']">Đăng ký ngay</a>
+    Don't have account? 
+    <a [routerLink]="['/register']">Register</a>
   </p>
 </div>

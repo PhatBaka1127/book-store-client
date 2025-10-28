@@ -2,12 +2,12 @@
   <h2>Danh sách Books</h2>
 
   <!-- Nút tạo sách nếu role khác 0 -->
-  <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Tạo sách mới</button>
+  <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Create new book</button>
 
-  <div *ngIf="loading">Đang tải sách...</div>
+  <div *ngIf="loading">Loading book...</div>
 
   <div *ngIf="!loading && books.length === 0">
-    Không có sách nào.
+    No book here.
   </div>
 
   <div class="book-list" *ngIf="!loading && books.length > 0">

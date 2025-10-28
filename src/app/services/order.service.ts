@@ -3,6 +3,23 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 
+export interface Order {
+  id: number;
+  createdDate: string;
+  quantity: number;
+  totalPrice: number;
+  status: string;
+}
+
+export interface OrderResponse {
+  metaData: {
+    page: number;
+    size: number;
+    total: number;
+  };
+  results: Order[];
+}
+
 export interface CreateOrderDetailDTO {
   bookId: number;
   quantity: number;
@@ -24,5 +41,9 @@ export class OrderService {
 
   createOrder(orderData: CreateOrderDTO): Observable<any> {
     return this.http.post<any>(this.apiUrl, orderData);
+  }
+
+  getOrders(page: number = 1, size: number = 20): Observable<OrderResponse> {
+    return this.http.get<OrderResponse>(`${this.apiUrl}?page=${page}&size=${size}`);
   }
 }

@@ -40,7 +40,7 @@ export class CreateBookComponent {
 
   onSubmit() {
     if (this.bookForm.invalid) {
-      this.errorMessage = 'Vui lòng nhập đầy đủ thông tin';
+      this.errorMessage = 'Please input all information';
       return;
     }
 
@@ -51,13 +51,13 @@ export class CreateBookComponent {
 
     this.bookService.createBook(data).subscribe({
       next: (res) => {
-        console.log('✅ Tạo sách thành công:', res);
-        alert('Tạo sách thành công!');
+        console.log('✅ Create book successfully:', res);
+        alert('Create book successfully!');
         this.router.navigate(['/home']); // quay lại danh sách sách
       },
       error: (err) => {
-        console.error('❌ Lỗi tạo sách:', err);
-        this.errorMessage = err.error?.message || 'Tạo sách thất bại';
+        console.error('❌ Something went wrong:', err);
+        this.errorMessage = err.error?.message || 'Something went wrong';
         this.loading = false;
       },
     });
@@ -70,7 +70,7 @@ export class CreateBookComponent {
         console.log('Categories:', res); // 🔥 debug
         this.categories = res;
       },
-      error: (err) => console.error('❌ Lỗi tải category:', err),
+      error: (err) => console.error('❌ Fail in loading category:', err),
     });
   }
 }

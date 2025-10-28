@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
         const user = JSON.parse(userCookie);
         this.userRole = user.role;
       } catch (err) {
-        console.error('Không parse được cookie user:', err);
+        console.error('Fail in parsing user cookie:', err);
       }
     }
 

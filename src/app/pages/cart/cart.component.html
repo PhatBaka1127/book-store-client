@@ -1,14 +1,14 @@
 <div class="cart-container">
   <h2>Giỏ hàng của bạn</h2>
 
-  <div *ngIf="cartItems.length > 0">
+  <div *ngIf="cartItems.length > 0; else emptyCart">
     <table>
       <thead>
         <tr>
-          <th>Sản phẩm</th>
-          <th>Giá</th>
-          <th>Số lượng</th>
-          <th>Tổng</th>
+          <th>Product</th>
+          <th>Unit Price</th>
+          <th>Quantity</th>
+          <th>Total Price</th>
           <th></th>
         </tr>
       </thead>
@@ -26,15 +26,18 @@
     </table>
 
     <div class="cart-summary">
-      <h3>Tổng cộng: {{ total | number }}₫</h3>
-      <button (click)="clearCart()">Xóa giỏ hàng</button>
-      <button (click)="goToCheckout()">Thanh toán</button>
+      <h3>Final price: {{ total | number }}₫</h3>
+      <button (click)="clearCart()">Clear cart</button>
+      <button (click)="goToCheckout()">Checkout</button>
     </div>
 
     <hr />
-
-    <ng-template #emptyCart>
-      <p>🛒 Giỏ hàng của bạn đang trống.</p>
-    </ng-template>
   </div>
+  
+  <ng-template #emptyCart>
+    <div class="empty-cart">
+      <p>🛒 Empty cart.</p>
+      <a routerLink="/home" class="back-link">Continue shopping</a>
+    </div>
+  </ng-template>
 </div>

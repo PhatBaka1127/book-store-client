@@ -52,11 +52,11 @@ export class ProductDetailComponent implements OnInit {
       if (existing) {
         // 🔥 Nếu sách đã có trong giỏ → tăng số lượng
         existing.quantity = (existing.quantity || 1) + 1;
-        alert(`🛒 Đã tăng số lượng lên ${existing.quantity}`);
+        alert(`🛒 Increased quantity to ${existing.quantity}`);
       } else {
         // 🔥 Nếu sách chưa có → thêm mới với quantity = 1
         cart.push({ ...this.book, quantity: 1 });
-        alert('✅ Đã thêm vào giỏ hàng!');
+        alert('✅ Added to cart!');
       }
 
       // 🔥 Cập nhật lại cookie (path "/" để dùng toàn app)

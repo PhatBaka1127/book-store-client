@@ -22,15 +22,10 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    // 🧠 Lấy thông tin user từ cookie (nếu có)
     const userCookie = this.cookieService.get('user');
     if (userCookie) {
-      try {
-        const user = JSON.parse(userCookie);
-        this.userId = user.id;
-      } catch {
-        console.warn('⚠️ Cookie user bị lỗi định dạng');
-      }
+      const user = JSON.parse(userCookie);
+      this.userId = user.id;
     }
 
     const cartCookie = this.cookieService.get('cart');
@@ -39,7 +34,6 @@ export class CartComponent implements OnInit {
         this.cartItems = JSON.parse(cartCookie);
       } catch {
         this.cartItems = [];
-        console.warn('⚠️ Cookie cart bị lỗi định dạng');
       }
     }
 

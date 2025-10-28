@@ -4,17 +4,20 @@
   </div>
 
   <div class="nav-right" *ngIf="user">
-    <span class="greeting">Xin chào, <strong>{{ user.email }}</strong></span>
+    <span class="greeting">Hi, <strong>{{ user.email }}</strong></span>
 
-    <!-- Chỉ hiện nút giỏ hàng nếu role == 0 -->
     <button *ngIf="user.role === 0" class="cart-btn" (click)="goToCart()">
-      🛒 Giỏ hàng
+      🛒 Cart
     </button>
 
-    <button class="logout-btn" (click)="logout()">Đăng xuất</button>
+    <button *ngIf="user.role === 0" class="history-btn" (click)="goToHistory()">
+      🧾 Order history
+    </button>
+
+    <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
 
   <div *ngIf="!user" class="nav-right">
-    <a routerLink="/login">Đăng nhập</a>
+    <a routerLink="/login">Login</a>
   </div>
 </nav>

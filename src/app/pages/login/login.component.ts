@@ -28,7 +28,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.errorMessage = 'Vui lòng nhập đầy đủ thông tin';
+      this.errorMessage = 'Please input all information';
       return;
     }
 
@@ -57,7 +57,7 @@ export class LoginComponent {
       },
       error: (err) => {
         console.error('❌ Login failed:', err);
-        this.errorMessage = err.error?.message || 'Sai tài khoản hoặc mật khẩu';
+        this.errorMessage = err.error?.message || 'Wrong login credential';
         this.loading = false;
       }
     });

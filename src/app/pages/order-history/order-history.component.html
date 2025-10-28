@@ -1,0 +1,35 @@
+<div class="order-history-container">
+  <h2>🧾 Order history</h2>
+
+  <div *ngIf="loading">⏳ Loading...</div>
+  <div *ngIf="error">{{ error }}</div>
+
+  <div *ngIf="!loading && !error">
+    <div *ngIf="orders.length > 0; else empty">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Order Date</th>
+            <th>Total Price</th>
+            <th>Quantity</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.createdDate| date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ order.totalPrice | number}}₫</td>
+            <td>{{ order.quantity}}</td>
+            <td>{{ order.status}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #empty>
+      <p>🙁 You don't have any orders.</p>
+    </ng-template>
+  </div>
+</div>

@@ -23,7 +23,7 @@ export class RegisterComponent {
 
   onSubmit() {
     if (this.registerForm.invalid) {
-      this.errorMessage = 'Vui lòng nhập đầy đủ thông tin';
+      this.errorMessage = 'Please input all information';
       return;
     }
 
@@ -32,13 +32,13 @@ export class RegisterComponent {
 
     this.authService.register(this.registerForm.value).subscribe({
       next: (res) => {
-        console.log('✅ Đăng ký thành công', res);
-        alert('Đăng ký thành công! Bạn có thể đăng nhập ngay.');
+        console.log('✅ Register successfully', res);
+        alert('Register successfully, you can login now.');
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('❌ Lỗi đăng ký', err);
-        this.errorMessage = err.error?.message || 'Đăng ký thất bại';
+        console.error('❌ Something went wrong', err);
+        this.errorMessage = err.error?.message || 'Something went wrong';
         this.loading = false;
       }
     });

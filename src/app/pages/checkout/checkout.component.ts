@@ -34,7 +34,7 @@ export class CheckoutComponent implements OnInit {
 
   checkout() {
     if (!this.phoneNumber || !this.address) {
-      alert('⚠️ Vui lòng nhập đầy đủ thông tin!');
+      alert('⚠️ Please input all information!');
       return;
     }
 
@@ -49,12 +49,12 @@ export class CheckoutComponent implements OnInit {
 
     this.orderService.createOrder(orderPayload).subscribe({
       next: () => {
-        alert('🎉 Đặt hàng thành công!');
+        alert('🎉 Order successfully!');
         this.cookieService.delete('cart', '/');
       },
       error: (err) => {
         console.error(err);
-        alert('❌ Có lỗi xảy ra khi đặt hàng!');
+        alert('❌ Something went wrong!');
       },
     });
   }
