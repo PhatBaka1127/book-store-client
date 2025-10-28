@@ -1,7 +1,7 @@
 <div class="cart-container">
   <h2>Giỏ hàng của bạn</h2>
 
-  <div *ngIf="cartItems.length > 0; else emptyCart">
+  <div *ngIf="cartItems.length > 0">
     <table>
       <thead>
         <tr>
@@ -18,7 +18,9 @@
           <td>{{ item.unitPrice | number }}₫</td>
           <td>{{ item.quantity }}</td>
           <td>{{ item.unitPrice * item.quantity | number }}₫</td>
-          <td><button (click)="removeItem(i)">X</button></td>
+          <td>
+            <button (click)="removeItem(i)">X</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -26,33 +28,13 @@
     <div class="cart-summary">
       <h3>Tổng cộng: {{ total | number }}₫</h3>
       <button (click)="clearCart()">Xóa giỏ hàng</button>
+      <button (click)="goToCheckout()">Thanh toán</button>
     </div>
 
     <hr />
 
-    <!-- 🏷️ Form thông tin người nhận -->
-    <div class="checkout-form">
-      <h3>Thông tin đặt hàng</h3>
-
-      <label>Số điện thoại:</label>
-      <input
-        type="text"
-        [(ngModel)]="phoneNumber"
-        placeholder="Nhập số điện thoại"
-      />
-
-      <label>Địa chỉ:</label>
-      <input
-        type="text"
-        [(ngModel)]="address"
-        placeholder="Nhập địa chỉ giao hàng"
-      />
-
-      <button (click)="checkout()">Thanh toán</button>
-    </div>
+    <ng-template #emptyCart>
+      <p>🛒 Giỏ hàng của bạn đang trống.</p>
+    </ng-template>
   </div>
-
-  <ng-template #emptyCart>
-    <p>🛒 Giỏ hàng của bạn đang trống.</p>
-  </ng-template>
 </div>

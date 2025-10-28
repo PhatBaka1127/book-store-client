@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CreateOrderDTO, OrderService } from 'src/app/services/order.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent implements OnInit {
   cartItems: any[] = [];
@@ -16,7 +17,8 @@ export class CartComponent implements OnInit {
 
   constructor(
     private orderService: OrderService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -31,7 +33,6 @@ export class CartComponent implements OnInit {
       }
     }
 
-    // 🧠 Lấy giỏ hàng từ cookie
     const cartCookie = this.cookieService.get('cart');
     if (cartCookie) {
       try {
@@ -53,7 +54,12 @@ export class CartComponent implements OnInit {
   }
 
   updateCartCookie() {
-    this.cookieService.set('cart', JSON.stringify(this.cartItems), undefined, '/');
+    this.cookieService.set(
+      'cart',
+      JSON.stringify(this.cartItems),
+      undefined,
+      '/'
+    );
   }
 
   removeItem(index: number) {
@@ -68,37 +74,7 @@ export class CartComponent implements OnInit {
     this.calculateTotal();
   }
 
-  checkout() {
-    if (!this.phoneNumber || !this.address) {
-      alert('⚠️ Vui lòng nhập đầy đủ thông tin đặt hàng!');
-      return;
-    }
-
-    if (!this.userId) {
-      alert('⚠️ Bạn cần đăng nhập trước khi đặt hàng!');
-      return;
-    }
-
-    const orderPayload: CreateOrderDTO = {
-      phoneNumber: this.phoneNumber,
-      address: this.address,
-      createOrderDetailDTOs: this.cartItems.map(item => ({
-        bookId: item.id, // vì bên ProductDetail dùng book.id
-        quantity: item.quantity
-      }))
-    };
-
-    console.log('📦 Payload gửi đến API:', orderPayload);
-
-    this.orderService.createOrder(orderPayload).subscribe({
-      next: () => {
-        alert('✅ Đặt hàng thành công!');
-        this.clearCart();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('❌ Có lỗi xảy ra khi đặt hàng!');
-      }
-    });
+  goToCheckout() {
+    this.router.navigate(['/checkout']);
   }
 }

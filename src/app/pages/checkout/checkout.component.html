@@ -1,0 +1,46 @@
+<div class="checkout-container">
+  <h2>Thanh toán</h2>
+
+  <!-- 🛒 Giỏ hàng -->
+  <div class="cart-section">
+    <h3>Giỏ hàng của bạn</h3>
+    <table *ngIf="cartItems.length > 0; else emptyCart">
+      <thead>
+        <tr>
+          <th>Sản phẩm</th>
+          <th>Giá</th>
+          <th>Số lượng</th>
+          <th>Tổng</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartItems">
+          <td>{{ item.name }}</td>
+          <td>{{ item.unitPrice | number }}₫</td>
+          <td>{{ item.quantity }}</td>
+          <td>{{ item.unitPrice * item.quantity | number }}₫</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #emptyCart>
+      <p>🛒 Giỏ hàng trống.</p>
+    </ng-template>
+    <div class="total">
+      <h3>Tổng cộng: {{ total | number }}₫</h3>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- 📦 Thông tin đặt hàng -->
+  <div class="info-section">
+    <h3>Thông tin đặt hàng</h3>
+    <label>Số điện thoại:</label>
+    <input type="text" [(ngModel)]="phoneNumber" placeholder="Nhập số điện thoại" />
+
+    <label>Địa chỉ:</label>
+    <input type="text" [(ngModel)]="address" placeholder="Nhập địa chỉ giao hàng" />
+
+    <button (click)="checkout()">Xác nhận đặt hàng</button>
+  </div>
+</div>
