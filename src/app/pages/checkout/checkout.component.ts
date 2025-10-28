@@ -39,7 +39,7 @@ export class CheckoutComponent implements OnInit {
     }
 
     const orderPayload: CreateOrderDTO = {
-      phoneNumber: this.phoneNumber,
+      phone: this.phoneNumber,
       address: this.address,
       createOrderDetailDTOs: this.cartItems.map((item) => ({
         bookId: item.id,

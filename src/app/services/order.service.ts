@@ -9,7 +9,7 @@ export interface CreateOrderDetailDTO {
 }
 
 export interface CreateOrderDTO {
-  phoneNumber: string;
+  phone: string;
   address: string;
   createOrderDetailDTOs: CreateOrderDetailDTO[];
 }
