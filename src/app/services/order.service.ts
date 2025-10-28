@@ -1,7 +1,16 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { Observable } from "rxjs";
+import { environment } from "../../environments/environment";
+
+export interface OrderReport {
+  date: string;
+  orders: number;
+  quantity: number;
+  revenue: number;
+}
+
+export type ReportType = "DAY" | "MONTH" | "YEAR";
 
 export interface Order {
   id: number;
@@ -47,8 +56,8 @@ export interface OrderValue {
   quantity: number;
   totalPrice: number;
   status: string;
-  phone: string,
-  address: string,
+  phone: string;
+  address: string;
   orderDetails: OrderDetail[];
 }
 
@@ -59,7 +68,7 @@ export interface OrderByIdResponse {
 }
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class OrderService {
   private apiUrl = `${environment.apiUrl}/orders`;
@@ -78,5 +87,19 @@ export class OrderService {
 
   getOrderById(orderId: number) {
     return this.http.get<OrderByIdResponse>(`${this.apiUrl}/${orderId}`);
+  }
+
+  getOrderReport(
+    startDate: string,
+    endDate: string,
+    reportFilterEnum: ReportType
+  ): Observable<OrderReport[]> {
+    return this.http.get<OrderReport[]>(
+      `${this.apiUrl}?startDate=${encodeURIComponent(
+        startDate
+      )}&endDate=${encodeURIComponent(
+        endDate
+      )}&reportFilterEnum=${reportFilterEnum}`
+    );
   }
 }

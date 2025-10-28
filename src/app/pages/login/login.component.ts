@@ -52,7 +52,11 @@ export class LoginComponent {
           }), undefined, '/');
         }
 
-        this.router.navigate(['/home']);
+        if (res.role === 1) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.router.navigate(['/home']);
+        }
         this.loading = false;
       },
       error: (err) => {
