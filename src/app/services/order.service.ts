@@ -31,8 +31,35 @@ export interface CreateOrderDTO {
   createOrderDetailDTOs: CreateOrderDetailDTO[];
 }
 
+export interface OrderDetail {
+  orderId: number;
+  bookId: number;
+  bookName: string;
+  bookImage: string;
+  unitPrice: number;
+  quantity: number;
+  totalPrice: number;
+}
+
+export interface OrderValue {
+  id: number;
+  createdDate: string;
+  quantity: number;
+  totalPrice: number;
+  status: string;
+  phone: string,
+  address: string,
+  orderDetails: OrderDetail[];
+}
+
+export interface OrderByIdResponse {
+  message: string;
+  result: boolean;
+  value: OrderValue;
+}
+
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
   private apiUrl = `${environment.apiUrl}/orders`;
@@ -44,6 +71,12 @@ export class OrderService {
   }
 
   getOrders(page: number = 1, size: number = 20): Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(`${this.apiUrl}?page=${page}&size=${size}`);
+    return this.http.get<OrderResponse>(
+      `${this.apiUrl}?page=${page}&size=${size}`
+    );
+  }
+
+  getOrderById(orderId: number) {
+    return this.http.get<OrderByIdResponse>(`${this.apiUrl}/${orderId}`);
   }
 }

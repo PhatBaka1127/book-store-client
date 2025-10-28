@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { OrderService, Order } from '../../services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order-history',
@@ -11,7 +12,7 @@ export class OrderHistoryComponent implements OnInit {
   loading = false;
   error: string | null = null;
 
-  constructor(private orderService: OrderService) {}
+  constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrders();
@@ -32,5 +33,9 @@ export class OrderHistoryComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  viewOrderDetail(orderId: number): void {
+    this.router.navigate([`/order/${orderId}`]);
   }
 }

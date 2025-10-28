@@ -1,0 +1,37 @@
+<div class="order-detail-container" *ngIf="!loading && !error">
+  <h2>🧾 Order #{{ order?.id }}</h2>
+
+  <p><strong>Phone:</strong> {{ order?.phone }} </p>
+  <p><strong>Address:</strong> {{ order?.address }} </p>
+  <p><strong>Date:</strong> {{ order?.createdDate }}</p>
+  <p><strong>Status:</strong> {{ order?.status }}</p>
+  <p><strong>Total Quantity:</strong> {{ order?.quantity }}</p>
+  <p><strong>Total Price:</strong> {{ order?.totalPrice | number }}₫</p>
+
+  <h3>Items</h3>
+  <table *ngIf="order?.orderDetails?.length">
+    <thead>
+      <tr>
+        <th>Book</th>
+        <th>Image</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of order?.orderDetails">
+        <td>{{ item.bookName }}</td>
+        <td><img [src]="item.bookImage" alt="{{ item.bookName }}"></td>
+        <td>{{ item.unitPrice | number }}₫</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.totalPrice | number }}₫</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!order?.orderDetails?.length">No items in this order.</p>
+</div>
+
+<div *ngIf="loading">⏳ Loading order details...</div>
+<div *ngIf="error" class="error-message">{{ error }}</div>
