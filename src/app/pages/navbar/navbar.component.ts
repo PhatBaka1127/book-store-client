@@ -1,26 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CookieService } from 'ngx-cookie-service';
+import { AuthService } from '../../services/auth.service'; // đường dẫn của bạn có thể khác
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+  styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
   user: any = null;
 
-  constructor(private cookieService: CookieService, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
-    const userCookie = this.cookieService.get('user');
-    if (userCookie) {
-      try {
-        this.user = JSON.parse(userCookie);
-      } catch {
-        this.user = null;
-      }
-    }
+    this.authService.user$.subscribe((user) => {
+      this.user = user;
+    });
   }
 
   goToCart(): void {
@@ -28,8 +23,7 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(): void {
-    this.cookieService.delete('token');
-    this.cookieService.delete('user');
+    this.authService.logout();
     this.router.navigate(['/login']);
   }
 }

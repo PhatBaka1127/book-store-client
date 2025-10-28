@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -10,14 +10,24 @@ import { CookieService } from 'ngx-cookie-service';
 export class AuthService {
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient, private cookieService: CookieService) {}
+  private userSubject = new BehaviorSubject<any>(null);
+  user$ = this.userSubject.asObservable();
+
+  constructor(private http: HttpClient, private cookieService: CookieService) {
+    const userCookie = this.cookieService.get('user');
+    if (userCookie) {
+      try {
+        this.userSubject.next(JSON.parse(userCookie));
+      } catch {
+        this.userSubject.next(null);
+      }
+    }
+  }
 
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap((res) => {
-        // Lưu token vào cookie
-        this.cookieService.set('token', res.accessToken, undefined, '/'); // đường dẫn '/' để dùng toàn app
-        // Lưu user info cũng có thể lưu cookie hoặc localStorage
+        this.cookieService.set('token', res.accessToken, undefined, '/');
         this.cookieService.set(
           'user',
           JSON.stringify({
@@ -28,6 +38,12 @@ export class AuthService {
           undefined,
           '/'
         );
+
+        this.userSubject.next({
+          id: res.id,
+          email: res.email,
+          role: res.role,
+        });
       })
     );
   }
@@ -39,6 +55,7 @@ export class AuthService {
   logout(): void {
     this.cookieService.delete('token', '/');
     this.cookieService.delete('user', '/');
+    this.userSubject.next(null);
   }
 
   register(data: {
