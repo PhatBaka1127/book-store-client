@@ -15,6 +15,7 @@ export interface Book {
   sellerName?: string;
   categoryId: number;
   categoryName: string;
+  quantity: number;
 }
 
 export interface BookResponse {

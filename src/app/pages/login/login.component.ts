@@ -38,7 +38,6 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         console.log('✅ Login success:', res);
-        alert('Đăng nhập thành công!');
 
         // Lưu token và user info vào cookie
         if (res?.accessToken) {

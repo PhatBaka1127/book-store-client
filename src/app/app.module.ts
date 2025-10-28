@@ -12,6 +12,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { NavbarComponent } from './pages/navbar/navbar.component';
     RegisterComponent,
     ProductDetailComponent,
     NavbarComponent,
+    CartComponent,
   ],
   imports: [
     BrowserModule,

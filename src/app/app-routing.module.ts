@@ -5,6 +5,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { CreateBookComponent } from './pages/create-book/create-book.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { CartComponent } from './pages/cart/cart.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'create-book', component: CreateBookComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'book/:id', component: ProductDetailComponent },
+  { path: 'cart', component: CartComponent },
 ];
 
 @NgModule({

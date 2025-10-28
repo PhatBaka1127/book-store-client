@@ -6,7 +6,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+  styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit {
   book: Book | null = null;
@@ -29,21 +29,38 @@ export class ProductDetailComponent implements OnInit {
 
     const bookId = Number(this.route.snapshot.paramMap.get('id'));
     this.bookService.getBookById(bookId).subscribe({
-      next: res => this.book = res,
-      error: err => console.error(err)
+      next: (res) => (this.book = res),
+      error: (err) => console.error(err),
     });
   }
 
   addToCart() {
     if (this.book) {
-      let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-      if (!cart.find((b: Book) => b.id === this.book!.id)) {
-        cart.push(this.book);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        alert('Đã thêm vào giỏ hàng!');
-      } else {
-        alert('Sách đã có trong giỏ hàng!');
+      const cartCookie = this.cookieService.get('cart');
+      let cart: Book[] = [];
+
+      if (cartCookie) {
+        try {
+          cart = JSON.parse(cartCookie);
+        } catch {
+          cart = [];
+        }
       }
+
+      const existing = cart.find((b: any) => b.id === this.book!.id);
+
+      if (existing) {
+        // 🔥 Nếu sách đã có trong giỏ → tăng số lượng
+        existing.quantity = (existing.quantity || 1) + 1;
+        alert(`🛒 Đã tăng số lượng lên ${existing.quantity}`);
+      } else {
+        // 🔥 Nếu sách chưa có → thêm mới với quantity = 1
+        cart.push({ ...this.book, quantity: 1 });
+        alert('✅ Đã thêm vào giỏ hàng!');
+      }
+
+      // 🔥 Cập nhật lại cookie (path "/" để dùng toàn app)
+      this.cookieService.set('cart', JSON.stringify(cart), undefined, '/');
     }
   }
 }
