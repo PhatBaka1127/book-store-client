@@ -27,6 +27,29 @@
       <h3>Tổng cộng: {{ total | number }}₫</h3>
       <button (click)="clearCart()">Xóa giỏ hàng</button>
     </div>
+
+    <hr />
+
+    <!-- 🏷️ Form thông tin người nhận -->
+    <div class="checkout-form">
+      <h3>Thông tin đặt hàng</h3>
+
+      <label>Số điện thoại:</label>
+      <input
+        type="text"
+        [(ngModel)]="phoneNumber"
+        placeholder="Nhập số điện thoại"
+      />
+
+      <label>Địa chỉ:</label>
+      <input
+        type="text"
+        [(ngModel)]="address"
+        placeholder="Nhập địa chỉ giao hàng"
+      />
+
+      <button (click)="checkout()">Thanh toán</button>
+    </div>
   </div>
 
   <ng-template #emptyCart>

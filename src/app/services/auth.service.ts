@@ -53,6 +53,7 @@ export class AuthService {
   }
 
   logout(): void {
+    this.cookieService.delete('cart', '/');
     this.cookieService.delete('token', '/');
     this.cookieService.delete('user', '/');
     this.userSubject.next(null);
