@@ -57,6 +57,13 @@
           background-color: #81b30c;
         }
       }
+
+      &.order-mgmt-btn {
+        background-color: rgb(155, 50, 123);
+        &:hover {
+          background-color: #e60bdb;
+        }
+      }
     }
 
     a {

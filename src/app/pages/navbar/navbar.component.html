@@ -10,21 +10,19 @@
       >Hi, <strong>{{ user.email }}</strong></span
     >
 
-    <button *ngIf="user.role === 0" class="cart-btn" (click)="goToCart()">
-      🛒 Cart
+    <button class="order-mgmt-btn" (click)="goToHistory()">
+      🧾 Order Management
     </button>
 
-    <button *ngIf="user.role === 0" class="history-btn" (click)="goToHistory()">
-      🧾 Order history
-    </button>
+    <ng-container *ngIf="user.role === 0">
+      <button class="cart-btn" (click)="goToCart()">🛒 Cart</button>
+    </ng-container>
 
-    <button
-      *ngIf="user.role === 1"
-      class="book-mgmt-btn"
-      (click)="goToBookManagement()"
-    >
-      📘 Book Management
-    </button>
+    <ng-container *ngIf="user.role === 1">
+      <button class="book-mgmt-btn" (click)="goToBookManagement()">
+        📘 Book Management
+      </button>
+    </ng-container>
 
     <button class="logout-btn" (click)="logout()">Logout</button>
   </div>
