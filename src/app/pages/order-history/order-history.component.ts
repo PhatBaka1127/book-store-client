@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class OrderHistoryComponent implements OnInit {
   orders: Order[] = [];
   loading = false;
-  error: string | null = null;
 
   constructor(private orderService: OrderService, private router: Router) {}
 
@@ -20,7 +19,6 @@ export class OrderHistoryComponent implements OnInit {
 
   loadOrders(): void {
     this.loading = true;
-    this.error = null;
 
     this.orderService.getOrders().subscribe({
       next: (res) => {
@@ -29,7 +27,6 @@ export class OrderHistoryComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.error = 'Can`t not load order.';
         this.loading = false;
       },
     });

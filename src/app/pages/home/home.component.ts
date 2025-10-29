@@ -28,7 +28,6 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Lấy user role từ cookie
     const userCookie = this.cookieService.get("user");
     if (userCookie) {
       try {
@@ -47,12 +46,10 @@ export class HomeComponent implements OnInit {
     this.categoryService.getCategories().subscribe({
       next: (res) => {
         this.categories = res;
-        // Sau khi có category mới load sách
         this.loadBooks();
       },
       error: (err) => {
-        console.error("❌ Failed to load categories:", err);
-        // Dù lỗi cũng vẫn load sách
+        console.error("Failed to load categories:", err);
         this.loadBooks();
       },
     });

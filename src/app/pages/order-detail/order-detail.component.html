@@ -1,4 +1,4 @@
-<div class="order-detail-container" *ngIf="!loading && !error">
+<div class="order-detail-container" *ngIf="!loading">
   <h2>🧾 Order #{{ order?.id }}</h2>
 
   <p><strong>Phone:</strong> {{ order?.phone }} </p>
@@ -34,4 +34,3 @@
 </div>
 
 <div *ngIf="loading">⏳ Loading order details...</div>
-<div *ngIf="error" class="error-message">{{ error }}</div>

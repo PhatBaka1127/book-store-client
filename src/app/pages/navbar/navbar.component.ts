@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service"; // đường dẫn của bạn có thể khác
+import { ToastService } from "src/app/services/toast.service";
 
 @Component({
   selector: "app-navbar",
@@ -10,12 +11,16 @@ import { AuthService } from "../../services/auth.service"; // đường dẫn c�
 export class NavbarComponent implements OnInit {
   user: any = null;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private toastService: ToastService
+  ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe((user) => {
       this.user = user;
-      console.log(user)
+      console.log(user);
     });
   }
 
@@ -30,6 +35,7 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(["/login"]);
+    this.toastService.showMessage(`Logout successfully`, true, 2000);
   }
 
   goToBookManagement() {

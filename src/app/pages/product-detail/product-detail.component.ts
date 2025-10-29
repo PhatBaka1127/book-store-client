@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BookService, Book } from '../../services/book.service';
 import { CookieService } from 'ngx-cookie-service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,7 +16,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -50,16 +52,13 @@ export class ProductDetailComponent implements OnInit {
       const existing = cart.find((b: any) => b.id === this.book!.id);
 
       if (existing) {
-        // 🔥 Nếu sách đã có trong giỏ → tăng số lượng
         existing.quantity = (existing.quantity || 1) + 1;
-        alert(`🛒 Increased quantity to ${existing.quantity}`);
+        this.toastService.showMessage(`Increased quantity to ${existing.quantity}`, true, 2000);
       } else {
-        // 🔥 Nếu sách chưa có → thêm mới với quantity = 1
         cart.push({ ...this.book, quantity: 1 });
-        alert('✅ Added to cart!');
+        this.toastService.showMessage(`Added to cart!`, true, 2000);
       }
 
-      // 🔥 Cập nhật lại cookie (path "/" để dùng toàn app)
       this.cookieService.set('cart', JSON.stringify(cart), undefined, '/');
     }
   }

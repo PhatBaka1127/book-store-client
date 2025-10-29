@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { OrderService, CreateOrderDTO } from 'src/app/services/order.service';
+import { ToastService } from 'src/app/services/toast.service';
 
 @Component({
   selector: 'app-checkout',
@@ -16,7 +17,8 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private cookieService: CookieService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class CheckoutComponent implements OnInit {
 
   checkout() {
     if (!this.phoneNumber || !this.address) {
-      alert('⚠️ Please input all information!');
+      this.toastService.showMessage("Please input all information", false, 2000);
       return;
     }
 
@@ -48,13 +50,13 @@ export class CheckoutComponent implements OnInit {
     };
 
     this.orderService.createOrder(orderPayload).subscribe({
-      next: () => {
-        alert('🎉 Order successfully!');
+      next: (res) => {
+        this.toastService.showMessage(res.message, true, 2000);
         this.cookieService.delete('cart', '/');
       },
-      error: (err) => {
-        console.error(err);
-        alert('❌ Something went wrong!');
+      error: (res) => {
+        console.error(res);
+        this.toastService.showMessage(res.error.message, false, 2000);
       },
     });
   }

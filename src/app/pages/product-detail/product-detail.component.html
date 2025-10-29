@@ -6,6 +6,5 @@
   <p><strong>Stock:</strong> {{ book.stock }}</p>
   <p *ngIf="book.description">{{ book.description }}</p>
 
-  <!-- Nút cart nếu role = 0 -->
   <button *ngIf="userRole === 0" (click)="addToCart()">🛒 Add to Cart</button>
 </div>
