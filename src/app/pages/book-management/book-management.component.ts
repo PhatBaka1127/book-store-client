@@ -16,7 +16,7 @@ export class BookManagementComponent implements OnInit {
   // pagination
   currentPage = 1;
   totalPages = 1;
-  pageSize = 9;
+  pageSize = 10;
   totalItems = 0;
 
   // form tạm để thêm/sửa

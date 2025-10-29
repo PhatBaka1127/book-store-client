@@ -1,40 +1,19 @@
 <div class="home-container">
-  <!-- Nút tạo sách nếu role khác 0 -->
-  <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Create new book</button>
+  <h2>📚 Book List</h2>
 
-  <div *ngIf="loading">Loading books...</div>
-
-  <div *ngIf="!loading && books.length === 0">
-    No books here.
-  </div>
-
-  <div class="book-list" *ngIf="!loading && books.length > 0">
+  <div class="book-list">
     <div class="book-item" *ngFor="let book of books">
-      <img 
-        [src]="book.image || 'https://via.placeholder.com/150'" 
-        alt="{{ book.name }}" 
-        width="150"
-        (click)="goToDetail(book.id)"
-        style="cursor: pointer;"
-      >
-      <h3>{{ book.name }}</h3>
-      <p><strong>Category:</strong> {{ book.categoryName }}</p>
-      <p><strong>Price:</strong> {{ book.unitPrice | currency:'VND':'symbol':'1.0-0' }}</p>
-      <p><strong>Stock:</strong> {{ book.stock }}</p>
-      <p *ngIf="book.description">{{ book.description }}</p>
+      <img [src]="book.image" alt="{{book.name}}" width="100%" />
+      <h3>{{book.name}}</h3>
+      <p>{{book.description}}</p>
+      <p><b>Price:</b> {{book.unitPrice | currency:'VND'}}</p>
     </div>
   </div>
 
-  <!-- ✅ Pagination -->
+  <!-- Pagination -->
   <div class="pagination" *ngIf="totalPages > 1">
-    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
-      ⬅ Prev
-    </button>
-
-    <span>Page {{ currentPage }} / {{ totalPages }}</span>
-
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
-      Next ➡
-    </button>
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">⬅ Prev</button>
+    <span>Page {{currentPage}} / {{totalPages}}</span>
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next ➡</button>
   </div>
 </div>
