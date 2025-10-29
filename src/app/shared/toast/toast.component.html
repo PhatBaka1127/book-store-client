@@ -1,0 +1,8 @@
+<!-- toast.component.html -->
+<div class="toast-wrapper">
+  <div *ngFor="let toast of toasts" class="toast" [ngClass]="{'success': toast.isSuccess, 'error': !toast.isSuccess}">
+    <span>{{ toast.text }}</span>
+    <button class="close-btn" (click)="closeToast(toast.id)">×</button>
+    <div class="progress" [style.animationDuration]="toast.duration + 'ms'"></div>
+  </div>
+</div>

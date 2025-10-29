@@ -1,0 +1,69 @@
+/* toast.component.css */
+.toast-wrapper {
+  position: fixed;
+  top: 20px; /* trên cùng màn hình */
+  left: 50%;
+  transform: translateX(-50%); /* canh giữa theo chiều ngang */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+  pointer-events: none; /* để không chặn click các phần khác */
+}
+
+.toast {
+  position: relative;
+  min-width: 300px;
+  max-width: 400px;
+  padding: 14px 20px;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.8); /* nền mờ tối đẹp */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  overflow: hidden;
+  pointer-events: auto; /* cho nút đóng bấm được */
+  animation: slideDown 0.5s ease;
+}
+
+.toast.success {
+  background: linear-gradient(90deg, #4caf50, #81c784);
+}
+
+.toast.error {
+  background: linear-gradient(90deg, #f44336, #e57373);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Progress bar */
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  background: rgba(255,255,255,0.9);
+  width: 100%;
+  animation-name: progressAnim;
+  animation-timing-function: linear;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes progressAnim {
+  from { width: 100%; }
+  to { width: 0%; }
+}

@@ -19,6 +19,7 @@ import { OrderDetailComponent } from './pages/order-detail/order-detail.componen
 import { DashboardComponent } from './pages/order-dashboard/order-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
 import { BookManagementComponent } from './pages/book-management/book-management.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BookManagementComponent } from './pages/book-management/book-management
     OrderHistoryComponent,
     OrderDetailComponent,
     DashboardComponent,
-    BookManagementComponent
+    BookManagementComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
