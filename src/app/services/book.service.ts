@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, map } from "rxjs";
 import { environment } from "../../environments/environment";
 
@@ -32,10 +32,22 @@ export class BookService {
   constructor(private http: HttpClient) {}
 
   /** 🟩 Lấy danh sách tất cả sách */
-  getBooks(page: number = 1, pageSize: number = 10): Observable<BookResponse> {
-    return this.http.get<BookResponse>(
-      `${this.apiUrl}?page=${page}&pageSize=${pageSize}`
-    );
+  getBooks(
+    page: number = 1,
+    pageSize: number = 10,
+    name?: string,
+    categoryId?: number | string
+  ): Observable<BookResponse> {
+    let params = new HttpParams().set("page", page).set("pageSize", pageSize);
+
+    if (name && name.trim() !== "") {
+      params = params.set("name", name);
+    }
+    if (categoryId && categoryId !== "") {
+      params = params.set("categoryId", categoryId);
+    }
+
+    return this.http.get<BookResponse>(this.apiUrl, { params });
   }
 
   /** 🟨 Lấy chi tiết một cuốn sách */

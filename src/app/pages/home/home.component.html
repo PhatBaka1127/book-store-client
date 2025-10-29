@@ -1,19 +1,40 @@
 <div class="home-container">
-  <h2>📚 Book List</h2>
+  <!-- 🔍 Bộ lọc -->
+  <div class="filter-bar">
+    <input
+      type="text"
+      placeholder="🔎 Search by name..."
+      [(ngModel)]="filter.name"
+      (input)="applyFilter()"
+    />
 
+    <select [(ngModel)]="filter.categoryId" (change)="applyFilter()">
+      <option value="">All categories</option>
+      <option *ngFor="let cat of categories" [value]="cat.id">
+        {{ cat.name }}
+      </option>
+    </select>
+  </div>
   <div class="book-list">
     <div class="book-item" *ngFor="let book of books">
-      <img [src]="book.image" alt="{{book.name}}" width="100%" />
-      <h3>{{book.name}}</h3>
-      <p>{{book.description}}</p>
-      <p><b>Price:</b> {{book.unitPrice | currency:'VND'}}</p>
+      <img [src]="book.image" alt="{{ book.name }}" width="100%" />
+      <h3>{{ book.name }}</h3>
+      <p>{{ book.description }}</p>
+      <p><b>Price:</b> {{ book.unitPrice | currency : "VND" }}</p>
     </div>
   </div>
 
   <!-- Pagination -->
   <div class="pagination" *ngIf="totalPages > 1">
-    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">⬅ Prev</button>
-    <span>Page {{currentPage}} / {{totalPages}}</span>
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next ➡</button>
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      ⬅ Prev
+    </button>
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+    <button
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      Next ➡
+    </button>
   </div>
 </div>
