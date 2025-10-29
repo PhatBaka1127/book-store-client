@@ -1,18 +1,15 @@
 <div class="home-container">
-  <h2>Danh sách Books</h2>
-
   <!-- Nút tạo sách nếu role khác 0 -->
   <button *ngIf="userRole !== 0" (click)="goToCreateBook()">+ Create new book</button>
 
-  <div *ngIf="loading">Loading book...</div>
+  <div *ngIf="loading">Loading books...</div>
 
   <div *ngIf="!loading && books.length === 0">
-    No book here.
+    No books here.
   </div>
 
   <div class="book-list" *ngIf="!loading && books.length > 0">
     <div class="book-item" *ngFor="let book of books">
-      <!-- Click vào ảnh đi đến chi tiết -->
       <img 
         [src]="book.image || 'https://via.placeholder.com/150'" 
         alt="{{ book.name }}" 
@@ -26,5 +23,18 @@
       <p><strong>Stock:</strong> {{ book.stock }}</p>
       <p *ngIf="book.description">{{ book.description }}</p>
     </div>
+  </div>
+
+  <!-- ✅ Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      ⬅ Prev
+    </button>
+
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next ➡
+    </button>
   </div>
 </div>

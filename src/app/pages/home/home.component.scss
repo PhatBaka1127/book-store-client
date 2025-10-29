@@ -1,12 +1,15 @@
 .home-container {
-  width: 800px;
+  width: 900px;
   margin: 50px auto;
+  text-align: center;
 }
 
 .book-list {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cột */
   gap: 20px;
+  justify-items: center;
+  margin-bottom: 30px;
 }
 
 .book-item {
@@ -15,13 +18,21 @@
   border-radius: 8px;
   width: 250px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background: #fff;
+  text-align: left;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 button {
   background-color: #4CAF50;
   color: white;
   padding: 8px 15px;
-  margin-bottom: 20px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -29,4 +40,9 @@ button {
 
 button:hover {
   background-color: #45a049;
+}
+
+button[disabled] {
+  background-color: #aaa;
+  cursor: not-allowed;
 }

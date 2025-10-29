@@ -13,6 +13,12 @@ export class BookManagementComponent implements OnInit {
   error: string | null = null;
   categories: Category[] = [];
 
+  // pagination
+  currentPage = 1;
+  totalPages = 1;
+  pageSize = 9;
+  totalItems = 0;
+
   // form tạm để thêm/sửa
   showForm = false;
   editingBook: Book | null = null;
@@ -33,33 +39,27 @@ export class BookManagementComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadBooks();
-    this.categoryService.getCategories().subscribe({
-      next: (res) => {
-        console.log("Categories:", res); // 🔥 debug
-        this.categories = res;
-      },
-      error: (err) => console.error("❌ Fail in loading category:", err),
-    });
+    this.loadCategories();
   }
 
   loadCategories() {
     this.categoryService.getCategories().subscribe({
-      next: (data) => {
-        this.categories = data;
-      },
-      error: (err) => {
-        console.error("Lỗi tải categories:", err);
-      },
+      next: (data) => (this.categories = data),
+      error: (err) => console.error("Lỗi tải categories:", err),
     });
   }
 
-  loadBooks(): void {
+  loadBooks(page: number = 1): void {
     this.loading = true;
     this.error = null;
 
-    this.bookService.getBooks().subscribe({
-      next: (books) => {
-        this.books = books;
+    this.bookService.getBooks(page, this.pageSize).subscribe({
+      next: (res) => {
+        this.books = res.results;
+        this.currentPage = res.metaData.page;
+        this.pageSize = res.metaData.size;
+        this.totalItems = res.metaData.total;
+        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
         this.loading = false;
       },
       error: (err) => {
@@ -68,6 +68,11 @@ export class BookManagementComponent implements OnInit {
         this.loading = false;
       },
     });
+  }
+
+  goToPage(page: number) {
+    if (page < 1 || page > this.totalPages) return;
+    this.loadBooks(page);
   }
 
   openForm(book?: Book): void {
@@ -96,25 +101,23 @@ export class BookManagementComponent implements OnInit {
 
   saveBook(): void {
     if (this.editingBook) {
-      this.bookService
-        .updateBook(this.editingBook.id, this.formData)
-        .subscribe({
-          next: () => {
-            alert("✅ Book updated successfully");
-            this.showForm = false;
-            this.loadBooks();
-          },
-          error: (err) => {
-            console.error(err);
-            alert("❌ Failed to update book");
-          },
-        });
+      this.bookService.updateBook(this.editingBook.id, this.formData).subscribe({
+        next: () => {
+          alert("✅ Book updated successfully");
+          this.showForm = false;
+          this.loadBooks(this.currentPage); // reload current page
+        },
+        error: (err) => {
+          console.error(err);
+          alert("❌ Failed to update book");
+        },
+      });
     } else {
       this.bookService.createBook(this.formData).subscribe({
         next: () => {
           alert("✅ Book added successfully");
           this.showForm = false;
-          this.loadBooks();
+          this.loadBooks(this.currentPage);
         },
         error: (err) => {
           console.error(err);
@@ -130,7 +133,7 @@ export class BookManagementComponent implements OnInit {
     this.bookService.deleteBook(bookId).subscribe({
       next: () => {
         alert("✅ Book deleted");
-        this.loadBooks();
+        this.loadBooks(this.currentPage);
       },
       error: (err) => {
         console.error(err);

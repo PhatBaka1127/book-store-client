@@ -38,6 +38,19 @@
 
   <p *ngIf="!loading && !books.length">🙁 No books found.</p>
 
+  <!-- ✅ Pagination -->
+  <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      ⬅ Prev
+    </button>
+
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next ➡
+    </button>
+  </div>
+
   <!-- Add / Edit Form -->
   <div class="form-modal" *ngIf="showForm">
     <div class="form-content">
@@ -57,8 +70,8 @@
 
       <div *ngIf="categories.length">
         <label>Category:</label>
-        <select [(ngModel)]="formData.categoryId" name="categoryId">
-          <option *ngFor="let cat of categories" [ngValue]="cat.id">
+        <select [(ngModel)]="formData.categoryId">
+          <option *ngFor="let cat of categories" [value]="cat.id">
             {{ cat.name }}
           </option>
         </select>
