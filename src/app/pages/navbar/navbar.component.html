@@ -1,6 +1,8 @@
 <nav class="navbar">
   <div class="nav-left">
-    <a routerLink="/home" class="logo">📚 BookStore</a>
+    <a [routerLink]="user?.role === 1 ? '/dashboard' : '/home'" class="logo">
+      📚 BookStore
+    </a>
   </div>
 
   <div class="nav-right" *ngIf="user">

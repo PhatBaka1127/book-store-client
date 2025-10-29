@@ -22,12 +22,12 @@
     <tbody>
       <tr *ngFor="let b of books">
         <td>{{ b.id }}</td>
-        <td><img [src]="b.image" alt="{{ b.name }}" width="50"></td>
+        <td><img [src]="b.image" alt="{{ b.name }}" width="50" /></td>
         <td>{{ b.name }}</td>
         <td>{{ b.categoryName }}</td>
         <td>{{ b.unitPrice | number }}</td>
         <td>{{ b.stock }}</td>
-        <td>{{ b.status === 1 ? 'Active' : 'Inactive' }}</td>
+        <td>{{ b.status === 1 ? "Active" : "Inactive" }}</td>
         <td>
           <button (click)="openForm(b)">✏️ Edit</button>
           <button (click)="deleteBook(b.id)">🗑️ Delete</button>
@@ -41,25 +41,31 @@
   <!-- Add / Edit Form -->
   <div class="form-modal" *ngIf="showForm">
     <div class="form-content">
-      <h3>{{ editingBook ? 'Edit Book' : 'Add New Book' }}</h3>
+      <h3>{{ editingBook ? "Edit Book" : "Add New Book" }}</h3>
 
       <label>Name:</label>
-      <input type="text" [(ngModel)]="formData.name">
+      <input type="text" [(ngModel)]="formData.name" />
 
       <label>Description:</label>
       <textarea [(ngModel)]="formData.description"></textarea>
 
       <label>Price:</label>
-      <input type="number" [(ngModel)]="formData.unitPrice">
+      <input type="number" [(ngModel)]="formData.unitPrice" />
 
       <label>Stock:</label>
-      <input type="number" [(ngModel)]="formData.stock">
+      <input type="number" [(ngModel)]="formData.stock" />
 
-      <label>Category ID:</label>
-      <input type="number" [(ngModel)]="formData.categoryId">
+      <div *ngIf="categories.length">
+        <label>Category:</label>
+        <select [(ngModel)]="formData.categoryId" name="categoryId">
+          <option *ngFor="let cat of categories" [ngValue]="cat.id">
+            {{ cat.name }}
+          </option>
+        </select>
+      </div>
 
       <label>Image:</label>
-      <input type="file" (change)="onFileChange($event)">
+      <input type="file" (change)="onFileChange($event)" />
 
       <div class="form-actions">
         <button (click)="saveBook()">💾 Save</button>

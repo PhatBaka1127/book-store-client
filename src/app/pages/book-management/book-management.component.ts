@@ -1,33 +1,56 @@
-import { Component, OnInit } from '@angular/core';
-import { Book, BookService } from 'src/app/services/book.service';
+import { Component, OnInit } from "@angular/core";
+import { Book, BookService } from "src/app/services/book.service";
+import { Category, CategoryService } from "src/app/services/category.service";
 
 @Component({
-  selector: 'app-book-management',
-  templateUrl: './book-management.component.html',
-  styleUrls: ['./book-management.component.scss']
+  selector: "app-book-management",
+  templateUrl: "./book-management.component.html",
+  styleUrls: ["./book-management.component.scss"],
 })
 export class BookManagementComponent implements OnInit {
   books: Book[] = [];
   loading = false;
   error: string | null = null;
+  categories: Category[] = [];
 
   // form tạm để thêm/sửa
   showForm = false;
   editingBook: Book | null = null;
   formData: any = {
-    name: '',
-    description: '',
+    name: "",
+    description: "",
     unitPrice: 0,
     stock: 0,
     status: 1,
     categoryId: 1,
-    image: null
+    image: null,
   };
 
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private categoryService: CategoryService
+  ) {}
 
   ngOnInit(): void {
     this.loadBooks();
+    this.categoryService.getCategories().subscribe({
+      next: (res) => {
+        console.log("Categories:", res); // 🔥 debug
+        this.categories = res;
+      },
+      error: (err) => console.error("❌ Fail in loading category:", err),
+    });
+  }
+
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        this.categories = data;
+      },
+      error: (err) => {
+        console.error("Lỗi tải categories:", err);
+      },
+    });
   }
 
   loadBooks(): void {
@@ -41,9 +64,9 @@ export class BookManagementComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
-        this.error = 'Cannot load book list.';
+        this.error = "Cannot load book list.";
         this.loading = false;
-      }
+      },
     });
   }
 
@@ -55,13 +78,13 @@ export class BookManagementComponent implements OnInit {
     } else {
       this.editingBook = null;
       this.formData = {
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         unitPrice: 0,
         stock: 0,
         status: 1,
         categoryId: 1,
-        image: null
+        image: null,
       };
     }
   }
@@ -73,44 +96,46 @@ export class BookManagementComponent implements OnInit {
 
   saveBook(): void {
     if (this.editingBook) {
-      this.bookService.updateBook(this.editingBook.id, this.formData).subscribe({
-        next: () => {
-          alert('✅ Book updated successfully');
-          this.showForm = false;
-          this.loadBooks();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('❌ Failed to update book');
-        }
-      });
+      this.bookService
+        .updateBook(this.editingBook.id, this.formData)
+        .subscribe({
+          next: () => {
+            alert("✅ Book updated successfully");
+            this.showForm = false;
+            this.loadBooks();
+          },
+          error: (err) => {
+            console.error(err);
+            alert("❌ Failed to update book");
+          },
+        });
     } else {
       this.bookService.createBook(this.formData).subscribe({
         next: () => {
-          alert('✅ Book added successfully');
+          alert("✅ Book added successfully");
           this.showForm = false;
           this.loadBooks();
         },
         error: (err) => {
           console.error(err);
-          alert('❌ Failed to add book');
-        }
+          alert("❌ Failed to add book");
+        },
       });
     }
   }
 
   deleteBook(bookId: number): void {
-    if (!confirm('Are you sure you want to delete this book?')) return;
+    if (!confirm("Are you sure you want to delete this book?")) return;
 
     this.bookService.deleteBook(bookId).subscribe({
       next: () => {
-        alert('✅ Book deleted');
+        alert("✅ Book deleted");
         this.loadBooks();
       },
       error: (err) => {
         console.error(err);
-        alert('❌ Failed to delete book');
-      }
+        alert("❌ Failed to delete book");
+      },
     });
   }
 }

@@ -100,7 +100,7 @@ export class BookService {
     if (data.categoryId)
       formData.append('categoryId', data.categoryId.toString());
 
-    return this.http.put(`${this.apiUrl}/${id}`, formData);
+    return this.http.patch(`${this.apiUrl}/${id}`, formData);
   }
 
   /** 🟥 Xóa sách */
