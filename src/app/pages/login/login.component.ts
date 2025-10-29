@@ -37,22 +37,21 @@ export class LoginComponent {
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
-        console.log('✅ Login success:', res);
-
-        // Lưu token và user info vào cookie
-        if (res?.accessToken) {
-          this.cookieService.set('token', res.accessToken, undefined, '/');
+        console.log('Login success:', res);
+        const value = res?.value;
+        if (value.accessToken) {
+          this.cookieService.set('token', value.accessToken, undefined, '/');
         }
 
-        if (res) {
+        if (value) {
           this.cookieService.set('user', JSON.stringify({
-            id: res.id,
-            email: res.email,
-            role: res.role
+            id: value.id,
+            email: value.email,
+            role: value.role
           }), undefined, '/');
         }
 
-        if (res.role === 1) {
+        if (value.role === 1) {
           this.router.navigate(['/dashboard']);
         } else {
           this.router.navigate(['/home']);

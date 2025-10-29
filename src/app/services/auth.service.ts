@@ -27,22 +27,23 @@ export class AuthService {
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap((res) => {
-        this.cookieService.set('token', res.accessToken, undefined, '/');
+        const value = res.value;
+        this.cookieService.set('token', value.accessToken, undefined, '/');
         this.cookieService.set(
           'user',
           JSON.stringify({
-            id: res.id,
-            email: res.email,
-            role: res.role,
+            id: value.id,
+            email: value.email,
+            role: value.role,
           }),
           undefined,
           '/'
         );
 
         this.userSubject.next({
-          id: res.id,
-          email: res.email,
-          role: res.role,
+          id: value.id,
+          email: value.email,
+          role: value.role,
         });
       })
     );
