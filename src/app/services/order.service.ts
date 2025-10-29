@@ -81,7 +81,7 @@ export class OrderService {
 
   getOrders(page: number = 1, size: number = 20): Observable<OrderResponse> {
     return this.http.get<OrderResponse>(
-      `${this.apiUrl}?page=${page}&size=${size}`
+      `${this.apiUrl}?page=${page}&pageSize=${size}`
     );
   }
 

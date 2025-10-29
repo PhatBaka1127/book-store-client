@@ -37,7 +37,6 @@
 
   <p *ngIf="!loading && !books.length">🙁 No books found.</p>
 
-  <!-- ✅ Pagination -->
   <div class="pagination" *ngIf="totalPages > 1">
     <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
       ⬅ Prev
@@ -50,7 +49,6 @@
     </button>
   </div>
 
-  <!-- Add / Edit Form -->
   <div class="form-modal" *ngIf="showForm">
     <div class="form-content">
       <h3>{{ editingBook ? "Edit Book" : "Add New Book" }}</h3>

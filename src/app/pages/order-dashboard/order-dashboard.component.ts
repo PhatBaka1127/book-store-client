@@ -10,7 +10,6 @@ import { ChartData, ChartOptions } from "chart.js";
 export class DashboardComponent implements OnInit {
   reports: OrderReport[] = [];
   loading = false;
-  error: string | null = null;
   reportType: "DAY" | "MONTH" | "YEAR" = "MONTH";
   startDate = "2000-01-01";
   endDate = "2026-01-01";
@@ -40,7 +39,6 @@ export class DashboardComponent implements OnInit {
 
   loadReport(): void {
     this.loading = true;
-    this.error = null;
 
     this.orderService
       .getOrderReport(this.startDate, this.endDate, this.reportType)
@@ -52,7 +50,6 @@ export class DashboardComponent implements OnInit {
         },
         error: (err) => {
           console.error(err);
-          this.error = "Cannot load report data.";
           this.loading = false;
         },
       });
@@ -96,7 +93,7 @@ export class DashboardComponent implements OnInit {
           backgroundColor: "rgba(54, 162, 235, 0.7)",
           borderColor: "rgba(54, 162, 235, 1)",
           borderWidth: 1,
-          yAxisID: "y", // trục trái
+          yAxisID: "y", 
         },
         {
           label: "Quantity",
@@ -104,7 +101,7 @@ export class DashboardComponent implements OnInit {
           backgroundColor: "rgba(255, 206, 86, 0.7)",
           borderColor: "rgba(255, 206, 86, 1)",
           borderWidth: 1,
-          yAxisID: "y", // trục trái
+          yAxisID: "y", 
         },
         {
           label: "Revenue (₫)",
@@ -112,7 +109,7 @@ export class DashboardComponent implements OnInit {
           backgroundColor: "rgba(75, 192, 192, 0.7)",
           borderColor: "rgba(75, 192, 192, 1)",
           borderWidth: 2,
-          yAxisID: "y1", // trục phải
+          yAxisID: "y1", 
         },
       ],
     };

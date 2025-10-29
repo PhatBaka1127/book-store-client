@@ -1,38 +1,42 @@
 <div class="order-history-container">
-  <h2>🧾 Order history</h2>
+  <h2>🧾 Order History</h2>
 
-  <div *ngIf="loading">⏳ Loading...</div>
+  <div *ngIf="loading" class="loading">⏳ Loading...</div>
 
-  <div *ngIf="!loading">
-    <div *ngIf="orders.length > 0; else empty">
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Order Date</th>
-            <th>Total Price</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let order of orders">
-            <td>{{ order.id }}</td>
-            <td>{{ order.createdDate| date: 'dd/MM/yyyy HH:mm' }}</td>
-            <td>{{ order.totalPrice | number}}₫</td>
-            <td>{{ order.quantity}}</td>
-            <td>{{ order.status}}</td>
-            <td>
-              <button (click)="viewOrderDetail(order.id)">Detail</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <table *ngIf="!loading && orders.length">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Order Date</th>
+        <th>Total Price</th>
+        <th>Quantity</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>{{ order.id }}</td>
+        <td>{{ order.createdDate | date: "dd/MM/yyyy HH:mm" }}</td>
+        <td>{{ order.totalPrice | number }}₫</td>
+        <td>{{ order.quantity }}</td>
+        <td>{{ order.status }}</td>
+        <td><button (click)="viewOrderDetail(order.id)">Detail</button></td>
+      </tr>
+    </tbody>
+  </table>
 
-    <ng-template #empty>
-      <p>🙁 You don't have any orders.</p>
-    </ng-template>
+    <div class="pagination" *ngIf="totalPages > 1">
+    <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">
+      ⬅ Prev
+    </button>
+
+    <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+      Next ➡
+    </button>
   </div>
+
+  <p *ngIf="!loading && orders.length === 0">🙁 No orders found.</p>
 </div>

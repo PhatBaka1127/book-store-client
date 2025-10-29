@@ -9,12 +9,36 @@ table {
   border-collapse: collapse;
   margin-top: 10px;
 
-  th, td {
+  th,
+  td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
   }
 
   th {
     background-color: #f9f9f9;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+
+  button {
+    padding: 6px 12px;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+
+    &:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
   }
 }
