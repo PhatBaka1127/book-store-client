@@ -17,7 +17,8 @@
     width: 100%;
     border-collapse: collapse;
 
-    th, td {
+    th,
+    td {
       border: 1px solid #ddd;
       padding: 8px;
       text-align: center;
@@ -30,5 +31,23 @@
 
   .error {
     color: red;
+  }
+
+  .dashboard-container {
+    padding: 20px;
+    max-width: 900px;
+    margin: auto;
+  }
+
+  .filters {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+
+    input,
+    select {
+      padding: 6px;
+    }
   }
 }

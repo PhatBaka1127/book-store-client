@@ -17,6 +17,7 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { OrderHistoryComponent } from './pages/order-history/order-history.component';
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { DashboardComponent } from './pages/order-dashboard/order-dashboard.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { DashboardComponent } from './pages/order-dashboard/order-dashboard.comp
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgChartsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

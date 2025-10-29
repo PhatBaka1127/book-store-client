@@ -95,7 +95,7 @@ export class OrderService {
     reportFilterEnum: ReportType
   ): Observable<OrderReport[]> {
     return this.http.get<OrderReport[]>(
-      `${this.apiUrl}?startDate=${encodeURIComponent(
+      `${this.apiUrl}/report/?startDate=${encodeURIComponent(
         startDate
       )}&endDate=${encodeURIComponent(
         endDate
