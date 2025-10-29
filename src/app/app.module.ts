@@ -18,6 +18,7 @@ import { OrderHistoryComponent } from './pages/order-history/order-history.compo
 import { OrderDetailComponent } from './pages/order-detail/order-detail.component';
 import { DashboardComponent } from './pages/order-dashboard/order-dashboard.component';
 import { NgChartsModule } from 'ng2-charts';
+import { BookManagementComponent } from './pages/book-management/book-management.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NgChartsModule } from 'ng2-charts';
     CheckoutComponent,
     OrderHistoryComponent,
     OrderDetailComponent,
-    DashboardComponent
+    DashboardComponent,
+    BookManagementComponent
   ],
   imports: [
     BrowserModule,

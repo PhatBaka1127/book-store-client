@@ -4,7 +4,9 @@
   </div>
 
   <div class="nav-right" *ngIf="user">
-    <span class="greeting">Hi, <strong>{{ user.email }}</strong></span>
+    <span class="greeting"
+      >Hi, <strong>{{ user.email }}</strong></span
+    >
 
     <button *ngIf="user.role === 0" class="cart-btn" (click)="goToCart()">
       🛒 Cart
@@ -12,6 +14,14 @@
 
     <button *ngIf="user.role === 0" class="history-btn" (click)="goToHistory()">
       🧾 Order history
+    </button>
+
+    <button
+      *ngIf="user.role === 1"
+      class="book-mgmt-btn"
+      (click)="goToBookManagement()"
+    >
+      📘 Book Management
     </button>
 
     <button class="logout-btn" (click)="logout()">Logout</button>

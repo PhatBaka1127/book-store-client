@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service'; // đường dẫn của bạn có thể khác
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service"; // đường dẫn của bạn có thể khác
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss'],
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.scss"],
 })
 export class NavbarComponent implements OnInit {
   user: any = null;
@@ -19,15 +19,19 @@ export class NavbarComponent implements OnInit {
   }
 
   goToCart(): void {
-    this.router.navigate(['/cart']);
+    this.router.navigate(["/cart"]);
   }
 
   goToHistory(): void {
-    this.router.navigate(['/order-history']);
+    this.router.navigate(["/order-history"]);
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
+  }
+
+  goToBookManagement() {
+    this.router.navigate(["/book-management"]);
   }
 }

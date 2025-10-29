@@ -50,6 +50,13 @@
           background-color: #81b30c;
         }
       }
+
+      &.book-mgmt-btn {
+        background-color: rgb(163, 163, 58);
+        &:hover {
+          background-color: #81b30c;
+        }
+      }
     }
 
     a {

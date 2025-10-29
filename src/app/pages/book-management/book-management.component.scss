@@ -1,0 +1,81 @@
+.book-management-container {
+  max-width: 1000px;
+  margin: 20px auto;
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+  h2 {
+    margin-bottom: 15px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f7f7f7;
+    }
+
+    img {
+      border-radius: 4px;
+    }
+
+    button {
+      margin: 0 4px;
+      padding: 4px 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      background: #007bff;
+      color: white;
+
+      &:hover {
+        background: #0056b3;
+      }
+
+      &:nth-child(2) {
+        background: #dc3545;
+        &:hover { background: #b02a37; }
+      }
+    }
+  }
+}
+
+.form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .form-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    input, textarea {
+      padding: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+  }
+}
