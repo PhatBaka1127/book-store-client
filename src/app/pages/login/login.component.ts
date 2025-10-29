@@ -42,7 +42,7 @@ export class LoginComponent {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         console.log("Login success:", res);
-        this.toastService.showMessage("Login successfully", true, 2000);
+        this.toastService.showMessage(res.message, !!res.result, 2000);
         const value = res?.value;
         if (value.accessToken) {
           this.cookieService.set("token", value.accessToken, undefined, "/");
@@ -68,9 +68,9 @@ export class LoginComponent {
         }
         this.loading = false;
       },
-      error: (err) => {
-        console.error("Login failed:", err);
-        this.toastService.showMessage("Login fail", false, 2000);
+      error: (res) => {
+        console.error("Login failed:", res);
+        this.toastService.showMessage(res.error.message, !!res.error.result, 2000);
         this.loading = false;
       },
     });
