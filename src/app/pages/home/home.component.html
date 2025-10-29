@@ -17,7 +17,13 @@
   </div>
   <div class="book-list">
     <div class="book-item" *ngFor="let book of books">
-      <img [src]="book.image" alt="{{ book.name }}" width="100%" />
+      <img
+        style="cursor: pointer"
+        [src]="book.image"
+        alt="{{ book.name }}"
+        width="100%"
+        (click)="goToDetail(book.id)"
+      />
       <h3>{{ book.name }}</h3>
       <p>{{ book.description }}</p>
       <p><b>Price:</b> {{ book.unitPrice | currency : "VND" }}</p>
