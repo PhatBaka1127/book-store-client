@@ -4,19 +4,19 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <div>
       <label>Email:</label>
-      <input type="email" formControlName="email">
+      <input type="email" formControlName="email" />
     </div>
 
     <div>
       <label>Password:</label>
-      <input type="password" formControlName="password">
+      <input type="password" formControlName="password" />
     </div>
 
-    <button type="submit">{{ loading ? 'Loading...' : 'Login' }}</button>
+    <button type="submit">{{ loading ? "Loading..." : "Login" }}</button>
   </form>
 
   <p class="register-link">
-    Don't have account? 
+    Don't have account?
     <a [routerLink]="['/register']">Register</a>
   </p>
 </div>

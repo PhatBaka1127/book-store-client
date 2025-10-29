@@ -4,7 +4,6 @@
   <button (click)="openForm()">➕ Add New Book</button>
 
   <div *ngIf="loading">⏳ Loading books...</div>
-  <div *ngIf="error" class="error">{{ error }}</div>
 
   <table *ngIf="!loading && books.length">
     <thead>
