@@ -1,6 +1,18 @@
 <div class="order-history-container">
   <h2>🧾 Order History</h2>
 
+ <div class="filter-section">
+    <label>
+      <span>Start Date <input type="date" [(ngModel)]="startTime" /> </span>
+    </label>
+
+    <label>
+      <span>End Date <input type="date" [(ngModel)]="endTime" /></span>
+    </label>
+
+    <button (click)="onFilterChange()">Apply Filter</button>
+  </div>
+
   <div *ngIf="loading" class="loading">⏳ Loading...</div>
 
   <table *ngIf="!loading && orders.length" class="orders-table">

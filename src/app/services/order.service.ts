@@ -84,12 +84,17 @@ export class OrderService {
     page: number = 1,
     size: number = 20,
     sortField: string = "createdDate",
-    sortDirection: "asc" | "desc" = "desc"
+    sortDirection: "asc" | "desc" = "desc",
+    startTime?: string,
+    endTime?: string
   ): Observable<OrderResponse> {
     let params = new HttpParams()
       .set("page", page)
       .set("pageSize", size)
       .set("sort", `${sortField},${sortDirection}`);
+
+    if (startTime) params = params.set("startTime", startTime);
+    if (endTime) params = params.set("endTime", endTime);
 
     return this.http.get<OrderResponse>(this.apiUrl, { params });
   }
