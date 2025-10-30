@@ -10,7 +10,7 @@ import { ChartData, ChartOptions } from "chart.js";
 export class DashboardComponent implements OnInit {
   reports: OrderReport[] = [];
   loading = false;
-  reportType: "DAY" | "MONTH" | "YEAR" = "MONTH";
+  reportType: "DAY" | "MONTH" | "YEAR" = "DAY";
   startDate = "2000-01-01";
   endDate = "2026-01-01";
 
