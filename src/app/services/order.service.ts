@@ -11,6 +11,7 @@ export interface OrderReport {
 }
 
 export type ReportType = "DAY" | "MONTH" | "YEAR";
+export type SortDirection = "asc" | "desc";
 
 export interface Order {
   id: number;
@@ -79,13 +80,21 @@ export class OrderService {
     return this.http.post<any>(this.apiUrl, orderData);
   }
 
-  getOrders(page: number = 1, size: number = 20): Observable<OrderResponse> {
-    return this.http.get<OrderResponse>(
-      `${this.apiUrl}?page=${page}&pageSize=${size}`
-    );
+  getOrders(
+    page: number = 1,
+    size: number = 20,
+    sortField: string = "createdDate",
+    sortDirection: "asc" | "desc" = "desc"
+  ): Observable<OrderResponse> {
+    let params = new HttpParams()
+      .set("page", page)
+      .set("pageSize", size)
+      .set("sort", `${sortField},${sortDirection}`);
+
+    return this.http.get<OrderResponse>(this.apiUrl, { params });
   }
 
-  getOrderById(orderId: number) {
+  getOrderById(orderId: number): Observable<OrderByIdResponse> {
     return this.http.get<OrderByIdResponse>(`${this.apiUrl}/${orderId}`);
   }
 
@@ -94,12 +103,11 @@ export class OrderService {
     endDate: string,
     reportFilterEnum: ReportType
   ): Observable<OrderReport[]> {
-    return this.http.get<OrderReport[]>(
-      `${this.apiUrl}/report/?startDate=${encodeURIComponent(
-        startDate
-      )}&endDate=${encodeURIComponent(
-        endDate
-      )}&reportFilterEnum=${reportFilterEnum}`
-    );
+    const params = new HttpParams()
+      .set("startDate", startDate)
+      .set("endDate", endDate)
+      .set("reportFilterEnum", reportFilterEnum);
+
+    return this.http.get<OrderReport[]>(`${this.apiUrl}/report`, { params });
   }
 }

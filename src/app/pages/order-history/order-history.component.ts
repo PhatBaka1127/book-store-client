@@ -16,20 +16,18 @@ export class OrderHistoryComponent implements OnInit {
   pageSize = 5;
   totalItems = 0;
 
+  sortField = 'createdDate';
+  sortDirection: 'asc' | 'desc' = 'desc';
+
   constructor(private orderService: OrderService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadOrders();
   }
 
-  viewOrderDetail(orderId: number): void {
-    this.router.navigate([`/order/${orderId}`]);
-  }
-
   loadOrders(page: number = 1): void {
     this.loading = true;
-
-    this.orderService.getOrders(page, this.pageSize).subscribe({
+    this.orderService.getOrders(page, this.pageSize, this.sortField, this.sortDirection).subscribe({
       next: (res) => {
         this.orders = res.results;
         this.currentPage = res.metaData.page;
@@ -45,8 +43,24 @@ export class OrderHistoryComponent implements OnInit {
     });
   }
 
-  goToPage(page: number) {
+  changeSort(field: string): void {
+    if (this.sortField === field) {
+      // Nếu click lại cùng field thì đảo hướng
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      // Nếu click field khác thì reset sang desc mặc định
+      this.sortField = field;
+      this.sortDirection = 'desc';
+    }
+    this.loadOrders(1);
+  }
+
+  goToPage(page: number): void {
     if (page < 1 || page > this.totalPages) return;
     this.loadOrders(page);
+  }
+
+  viewOrderDetail(orderId: number): void {
+    this.router.navigate([`/order/${orderId}`]);
   }
 }
