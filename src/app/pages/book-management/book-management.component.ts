@@ -16,7 +16,7 @@ export class BookManagementComponent implements OnInit {
 
   currentPage = 1;
   totalPages = 1;
-  pageSize = 10;
+  pageSize = 5;
   totalItems = 0;
 
   showForm = false;
