@@ -12,6 +12,7 @@ export class BookManagementComponent implements OnInit {
   books: Book[] = [];
   loading = false;
   categories: Category[] = [];
+  filter = { name: "", categoryId: "" };
 
   currentPage = 1;
   totalPages = 1;
@@ -51,20 +52,22 @@ export class BookManagementComponent implements OnInit {
   loadBooks(page: number = 1): void {
     this.loading = true;
 
-    this.bookService.getBooks(page, this.pageSize).subscribe({
-      next: (res) => {
-        this.books = res.results;
-        this.currentPage = res.metaData.page;
-        this.pageSize = res.metaData.size;
-        this.totalItems = res.metaData.total;
-        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
-        this.loading = false;
-      },
-      error: (err) => {
-        console.error(err);
-        this.loading = false;
-      },
-    });
+    this.bookService
+      .getBooks(page, this.pageSize, this.filter.name, this.filter.categoryId)
+      .subscribe({
+        next: (res) => {
+          this.books = res.results;
+          this.currentPage = res.metaData.page;
+          this.pageSize = res.metaData.size;
+          this.totalItems = res.metaData.total;
+          this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error(err);
+          this.loading = false;
+        },
+      });
   }
 
   goToPage(page: number) {
@@ -98,17 +101,19 @@ export class BookManagementComponent implements OnInit {
 
   saveBook(): void {
     if (this.editingBook) {
-      this.bookService.updateBook(this.editingBook.id, this.formData).subscribe({
-        next: (res) => {
-          this.toastService.showMessage(res.message, true, 2000);
-          this.showForm = false;
-          this.loadBooks(this.currentPage);
-        },
-        error: (res) => {
-          this.toastService.showMessage(res.error.message, true, 2000)
-          console.error(res);
-        },
-      });
+      this.bookService
+        .updateBook(this.editingBook.id, this.formData)
+        .subscribe({
+          next: (res) => {
+            this.toastService.showMessage(res.message, true, 2000);
+            this.showForm = false;
+            this.loadBooks(this.currentPage);
+          },
+          error: (res) => {
+            this.toastService.showMessage(res.error.message, true, 2000);
+            console.error(res);
+          },
+        });
     } else {
       this.bookService.createBook(this.formData).subscribe({
         next: (res) => {
@@ -118,7 +123,7 @@ export class BookManagementComponent implements OnInit {
         },
         error: (res) => {
           console.error(res);
-          this.toastService.showMessage(res.error.message, true, 2000)
+          this.toastService.showMessage(res.error.message, true, 2000);
         },
       });
     }
@@ -137,5 +142,10 @@ export class BookManagementComponent implements OnInit {
         this.toastService.showMessage(res.error.message, true, 2000);
       },
     });
+  }
+
+  applyFilter() {
+    this.currentPage = 1;
+    this.loadBooks();
   }
 }

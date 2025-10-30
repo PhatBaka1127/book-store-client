@@ -1,7 +1,24 @@
 <div class="book-management-container">
   <h2>📚 Book Management</h2>
 
-  <button (click)="openForm()">➕ Add New Book</button>
+  <div class="filter-bar">
+    <span>
+      <button (click)="openForm()">➕ Add New Book</button>
+      <input
+        type="text"
+        placeholder="🔎 Search by name..."
+        [(ngModel)]="filter.name"
+        (input)="applyFilter()"
+      />
+
+      <select [(ngModel)]="filter.categoryId" (change)="applyFilter()">
+        <option value="">All categories</option>
+        <option *ngFor="let cat of categories" [value]="cat.id">
+          {{ cat.name }}
+        </option>
+      </select>
+    </span>
+  </div>
 
   <div *ngIf="loading">⏳ Loading books...</div>
 
@@ -44,7 +61,10 @@
 
     <span>Page {{ currentPage }} / {{ totalPages }}</span>
 
-    <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">
+    <button
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
       Next ➡
     </button>
   </div>
