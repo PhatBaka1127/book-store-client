@@ -13,10 +13,10 @@ export class OrderDetailComponent implements OnInit {
   order: any = null;
   loading = false;
   orderStatuses = [
-    { value: 0, label: "ORDERED" },
-    { value: 1, label: "DELIVERING" },
-    { value: 2, label: "DELIVERED" },
-    { value: 3, label: "FAILED" },
+    { value: "ORDERED", label: "ORDERED" },
+    { value: "DELIVERING", label: "DELIVERING" },
+    { value: "DELIVERED", label: "DELIVERED" },
+    { value: "FAILED", label: "FAILED" },
   ];
 
   constructor(
@@ -54,23 +54,22 @@ export class OrderDetailComponent implements OnInit {
         bookId: item.bookId,
         status: newStatus,
       },
-    ]; // <-- bọc trong mảng
+    ];
 
     this.orderService.updateOrderDetail(this.orderId, payload).subscribe({
-      next: (res) => {
-        if (res) {
-          item.status = newStatus;
-          this.toastService.showMessage(
-            "Update status successfully",
-            true,
-            2000
-          );
-        }
+      next: () => {
+        item.status = newStatus;
+        item.updatedDate = new Date();
+        this.toastService.showMessage("Update status successfully", true, 2000);
       },
-      error: (err) => {
-        console.error(err);
+      error: () => {
         this.toastService.showMessage("Update status failed", false, 2000);
       },
     });
+  }
+
+  getStatusLabel(status: string) {
+    const s = this.orderStatuses.find((x) => x.value === status);
+    return s ? s.label : "";
   }
 }

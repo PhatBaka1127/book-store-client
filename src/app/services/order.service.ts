@@ -49,11 +49,14 @@ export interface OrderDetail {
   unitPrice: number;
   quantity: number;
   totalPrice: number;
+  createdDate: string;
+  updatedDate: string;
 }
 
 export interface OrderValue {
   id: number;
   createdDate: string;
+  updatedDate: string;
   quantity: number;
   totalPrice: number;
   status: string;

@@ -17,6 +17,8 @@
         <th>Unit Price</th>
         <th>Quantity</th>
         <th>Total Price</th>
+        <th>Created Date</th>
+        <th>Updated Date</th>
         <th>Action</th>
       </tr>
     </thead>
@@ -27,6 +29,8 @@
         <td>{{ item.unitPrice | number }}₫</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.totalPrice | number }}₫</td>
+        <td>{{ item.createdDate | date : "dd/MM/yyyy HH:mm" }}</td>
+        <td>{{ item.updatedDate | date : "dd/MM/yyyy HH:mm" }}</td>
         <td>
           <select
             [ngModel]="item.status"
