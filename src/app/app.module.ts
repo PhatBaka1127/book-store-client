@@ -19,6 +19,8 @@ import { DashboardComponent } from './pages/order-dashboard/order-dashboard.comp
 import { NgChartsModule } from 'ng2-charts';
 import { BookManagementComponent } from './pages/book-management/book-management.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { ForbiddenComponent } from './pages/forbidden/forbidden.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { ToastComponent } from './shared/toast/toast.component';
     OrderDetailComponent,
     DashboardComponent,
     BookManagementComponent,
-    ToastComponent
+    ToastComponent,
+    ForbiddenComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

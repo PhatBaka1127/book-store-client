@@ -21,10 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
 
-  intercept(
-    req: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken();
 
     let authReq = req;
@@ -35,18 +32,13 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     return next.handle(authReq).pipe(
-      catchError((error) => {
-        if (
-          error instanceof HttpErrorResponse &&
-          error.status === 401 &&
-          !this.isRefreshing
-        ) {
+      catchError((error: HttpErrorResponse) => {
+        if (error.status === 401 && !this.isRefreshing) {
           this.isRefreshing = true;
 
           return this.authService.refreshAccessToken().pipe(
             switchMap((newToken) => {
               this.isRefreshing = false;
-
               const cloned = req.clone({
                 headers: req.headers.set("Authorization", `Bearer ${newToken}`),
               });
@@ -55,18 +47,25 @@ export class AuthInterceptor implements HttpInterceptor {
             catchError((err) => {
               this.isRefreshing = false;
               this.authService.logout();
-              this.toastService.showMessage("Phiên đăng nhập đã hết hạn", false);
+              this.toastService.showMessage("Session exprired", false);
               this.router.navigate(["/login"]);
               return throwError(() => err);
             })
           );
         }
 
-        // Nếu refresh token cũng hết hạn hoặc lỗi khác
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (error.status === 401) {
           this.authService.logout();
-          this.toastService.showMessage("Phiên đăng nhập không hợp lệ, vui lòng đăng nhập lại", false);
+          this.toastService.showMessage("Invalid session, please login again", false);
           this.router.navigate(["/login"]);
+        }
+
+        if (error.status === 403) {
+          this.router.navigate(["/forbidden"]);
+        }
+
+        if (error.status === 404) {
+          this.router.navigate(["/not-found"]);
         }
 
         return throwError(() => error);
