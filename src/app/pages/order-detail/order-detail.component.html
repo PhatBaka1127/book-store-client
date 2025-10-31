@@ -36,7 +36,11 @@
             [ngModel]="item.status"
             (ngModelChange)="updateStatus(item, $event)"
           >
-            <option *ngFor="let s of orderStatuses" [value]="s.value">
+            <option
+              *ngFor="let s of orderStatuses"
+              [value]="s.label"
+              [disabled]="s.label === 'ORDERED'"
+            >
               {{ s.label }}
             </option>
           </select>
