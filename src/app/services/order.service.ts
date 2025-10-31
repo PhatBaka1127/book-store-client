@@ -115,4 +115,14 @@ export class OrderService {
 
     return this.http.get<OrderReport[]>(`${this.apiUrl}/report`, { params });
   }
+
+  updateOrderDetail(
+    orderId: number,
+    payload: { bookId: number; status: string }[]
+  ) {
+    return this.http.put(
+      `${this.apiUrl}/${orderId}/order-detail`,
+      payload
+    );
+  }
 }

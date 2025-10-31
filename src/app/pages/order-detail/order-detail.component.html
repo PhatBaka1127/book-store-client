@@ -1,8 +1,8 @@
 <div class="order-detail-container" *ngIf="!loading">
   <h2>🧾 Order #{{ order?.id }}</h2>
 
-  <p><strong>Phone:</strong> {{ order?.phone }} </p>
-  <p><strong>Address:</strong> {{ order?.address }} </p>
+  <p><strong>Phone:</strong> {{ order?.phone }}</p>
+  <p><strong>Address:</strong> {{ order?.address }}</p>
   <p><strong>Date:</strong> {{ order?.createdDate }}</p>
   <p><strong>Status:</strong> {{ order?.status }}</p>
   <p><strong>Total Quantity:</strong> {{ order?.quantity }}</p>
@@ -17,15 +17,26 @@
         <th>Unit Price</th>
         <th>Quantity</th>
         <th>Total Price</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of order?.orderDetails">
         <td>{{ item.bookName }}</td>
-        <td><img [src]="item.bookImage" alt="{{ item.bookName }}"></td>
+        <td><img [src]="item.bookImage" alt="{{ item.bookName }}" /></td>
         <td>{{ item.unitPrice | number }}₫</td>
         <td>{{ item.quantity }}</td>
         <td>{{ item.totalPrice | number }}₫</td>
+        <td>
+          <select
+            [ngModel]="item.status"
+            (ngModelChange)="updateStatus(item, $event)"
+          >
+            <option *ngFor="let s of orderStatuses" [value]="s.value">
+              {{ s.label }}
+            </option>
+          </select>
+        </td>
       </tr>
     </tbody>
   </table>
