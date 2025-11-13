@@ -1,18 +1,18 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { LoginComponent } from "./pages/login/login.component";
-import { RegisterComponent } from "./pages/register/register.component";
-import { HomeComponent } from "./pages/home/home.component";
-import { ProductDetailComponent } from "./pages/product-detail/product-detail.component";
-import { CartComponent } from "./pages/cart/cart.component";
-import { CheckoutComponent } from "./pages/checkout/checkout.component";
-import { OrderHistoryComponent } from "./pages/order-history/order-history.component";
-import { OrderDetailComponent } from "./pages/order-detail/order-detail.component";
-import { DashboardComponent } from "./pages/order-dashboard/order-dashboard.component";
-import { BookManagementComponent } from "./pages/book-management/book-management.component";
+import { LoginComponent } from "./features/auth/pages/login/login.component";
+import { RegisterComponent } from "./features/auth/pages/register/register.component";
+import { HomeComponent } from "./core/layouts/home/home.component";
+import { ProductDetailComponent } from "./core/layouts/product-detail/product-detail.component";
+import { CartComponent } from "./core/layouts/cart/cart.component";
+import { CheckoutComponent } from "./core/layouts/checkout/checkout.component";
+import { OrderHistoryComponent } from "./core/layouts/order-history/order-history.component";
+import { OrderDetailComponent } from "./core/layouts/order-detail/order-detail.component";
+import { DashboardComponent } from "./core/layouts/order-dashboard/order-dashboard.component";
+import { BookManagementComponent } from "./core/layouts/book-management/book-management.component";
 import { AuthGuard } from "./guards/auth.guard";
-import { ForbiddenComponent } from "./pages/forbidden/forbidden.component";
-import { NotFoundComponent } from "./pages/not-found/not-found.component";
+import { ForbiddenComponent } from "./core/layouts/forbidden/forbidden.component";
+import { NotFoundComponent } from "./core/layouts/not-found/not-found.component";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
